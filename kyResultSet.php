@@ -76,7 +76,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
 			$objects = $objects->getRawArray();
 		}
 
-		if (strlen($class_name) > 0) {
+		if (strlen(($class_name ?? '')) > 0) {
 			$this->class_name = $class_name;
 		} elseif (count($objects) > 0) {
 			//get class name of first object
@@ -171,7 +171,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
 	 */
 	public function offsetSet($offset, $value)
 	{
-		if (!is_object($value) || (strlen($this->class_name) > 0 && get_class($value) !== $this->class_name)) {
+		if (!is_object($value) || (strlen(($this->class_name ?? '')) > 0 && get_class($value) !== $this->class_name)) {
 			throw new DomainException(sprintf('The result set can only hold objects of type "%s"', $this->class_name));
 		}
 
