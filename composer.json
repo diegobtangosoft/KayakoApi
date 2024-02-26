@@ -1,0 +1,12 @@
+{
+    "name": "axoft/kayako-php-api-library",
+    "description": "PHP API library for Kayako",
+    "require": {
+        "php": ">=8.0",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "classmap": [""],
+        "files": ["kyHelpers.php"]
+    }
+}
