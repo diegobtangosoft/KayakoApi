@@ -50,16 +50,13 @@ function initKayako()
  */
 function getDepartmentsTree()
 {
-	$departments_tree = array();
+	$departments_tree = [];
 	$all_departments = kyDepartment::getAll()->filterByModule(kyDepartment::MODULE_TICKETS)->filterByType(kyDepartment::TYPE_PUBLIC);
 
 	$top_departments = $all_departments->filterByParentDepartmentId(null)->orderByDisplayOrder();
 	foreach ($top_departments as $top_department) {
 		/* @var $top_department kyDepartment */
-		$departments_tree[$top_department->getId()] = array(
-			'department' => $top_department,
-			'child_departments' => $all_departments->filterByParentDepartmentId($top_department->getId())->orderByDisplayOrder()
-		);
+		$departments_tree[$top_department->getId()] = ['department' => $top_department, 'child_departments' => $all_departments->filterByParentDepartmentId($top_department->getId())->orderByDisplayOrder()];
 	}
 
 	return $departments_tree;
@@ -80,14 +77,14 @@ function get_ticket_custom_fields(kyTicket $ticket, &$file_custom_field_present)
 {
 	$custom_field_groups = $ticket->getCustomFieldGroups();
 	if (count($custom_field_groups) === 0) {
-		return array();
+		return [];
 	}
 
-	$custom_fields = array();
+	$custom_fields = [];
 	foreach ($custom_field_groups as $custom_field_group) {
 		/* @var $custom_field_group kyTicketCustomFieldGroup */
 
-		$group_custom_fields = array();
+		$group_custom_fields = [];
 		foreach ($custom_field_group->getFields() as $custom_field) {
 			/* @var $custom_field kyCustomField */
 			if (!$custom_field->getDefinition()->getIsUserEditable()) {
@@ -144,9 +141,9 @@ function get_post_value($field_name, &$form_valid, &$fields_valid, $required = t
 		$value = $_POST[$field_name];
 		if (!is_array($value)) {
 			if (strlen(trim($value)) > 0) {
-				$value = array($value);
+				$value = [$value];
 			} else {
-				$value = array();
+				$value = [];
 			}
 		}
 
@@ -294,7 +291,7 @@ $page = get_post_value('page', $nop, $nop, false);
 $form_valid = true;
 
 //holds fields validity status
-$fields_valid = array();
+$fields_valid = [];
 
 //processing of submitted forms
 switch ($page) {
@@ -336,7 +333,7 @@ switch ($page) {
 		}
 
 		//load custom field values
-		$custom_field_values = array();
+		$custom_field_values = [];
 		foreach ($ticket_custom_fields as $custom_fields) {
 			foreach ($custom_fields as $custom_field) {
 				/* @var $custom_field kyCustomField */
@@ -545,7 +542,7 @@ if ($render === 'submit') {
 
 	if (count($ticket_custom_fields) > 0) {
 		//load custom field default values
-		$custom_field_values = array();
+		$custom_field_values = [];
 		foreach ($ticket_custom_fields as $custom_fields) {
 			foreach ($custom_fields as $custom_field) {
 				/* @var $custom_field kyCustomField */

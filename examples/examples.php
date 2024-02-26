@@ -68,7 +68,7 @@ if (count($staff_groups_to_delete) > 0) {
 }
 
 $departments_to_delete = kyDepartment::getAll()
-	->filterByTitle(array("Urgent problems (example)", "Printers (example)"));
+	->filterByTitle(["Urgent problems (example)", "Printers (example)"]);
 
 $departments_to_delete->deleteAll();
 
@@ -331,10 +331,10 @@ print 'Updated ticket status: '.$ticket;
  */
 $tickets = kyTicket::getAll(
 	kyDepartment::getAll()
-		->filterByTitle(array("~", "/printer/i")),
+		->filterByTitle(["~", "/printer/i"]),
 	kyTicketStatus::getAll()
-		->filterByTitle(array("!=", "Closed")),
-	array(),
+		->filterByTitle(["!=", "Closed"]),
+	[],
 	kyUser::getAll()
 		->filterByEmail("anno.ying@example.com")
 );
@@ -345,7 +345,7 @@ print "Searching tickets:\n".$tickets;
 /**
  * Search for tickets with "power cable" text in contents of posts or notes.
  */
-$tickets = kyTicket::search("power cable", array(kyTicket::SEARCH_CONTENTS, kyTicket::SEARCH_NOTES));
+$tickets = kyTicket::search("power cable", [kyTicket::SEARCH_CONTENTS, kyTicket::SEARCH_NOTES]);
 
 //print them
 print "Searching tickets:\n".$tickets;
@@ -356,9 +356,9 @@ print "Searching tickets:\n".$tickets;
  */
 $tickets = kyTicket::getAll(kyDepartment::getAll())
 	->filterByStatusId(kyTicketStatus::getAll()
-		->filterByTitle(array("!=", "Closed"))->collectId())
-	->filterByReplies(array('<=', 1))
-	->filterByOwnerStaffId(array("!=", null));
+		->filterByTitle(["!=", "Closed"])->collectId())
+	->filterByReplies(['<=', 1])
+	->filterByOwnerStaffId(["!=", null]);
 
 //print them
 print "Searching tickets:\n".$tickets;
@@ -379,13 +379,13 @@ print_r(kyStaff::getAvailableOrderMethods());
 $user = kyUser::getAll()->filterByEmail("someuser@example.com")->first();
 
 //find ticket time tracks with billable time greater than 10 minutes and sort them ascending using time worked
-$time_tracks = $ticket->getTimeTracks()->filterByTimeBillable(array(">", 10 * 60))->orderByTimeWorked();
+$time_tracks = $ticket->getTimeTracks()->filterByTimeBillable([">", 10 * 60])->orderByTimeWorked();
 
 //find department with title "General"
 $general_department = kyDepartment::getAll()->filterByTitle("General")->first();
 
 //find tickets in "General" department with word "help" in subject
-$tickets = kyTicket::getAll($general_department->getId())->filterBySubject(array("~", "/help/i"));
+$tickets = kyTicket::getAll($general_department->getId())->filterBySubject(["~", "/help/i"]);
 
 //assuming 10 items per page, get second page from list of staff users ordered by fullname
 $staff_page_2 = kyStaff::getAll()->orderByFullName()->getPage(2, 10);

@@ -8,5 +8,8 @@
     "autoload": {
         "classmap": [""],
         "files": ["kyHelpers.php"]
+    },
+    "require-dev": {
+        "rector/rector": "^1.0"
     }
 }

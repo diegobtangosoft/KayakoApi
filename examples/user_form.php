@@ -47,7 +47,7 @@ function initKayako()
  */
 function get_timezones()
 {
-	$timezones = array();
+	$timezones = [];
 
 	foreach (timezone_abbreviations_list() as $tz_abbreviation) {
 		foreach ($tz_abbreviation as $timezone) {
@@ -98,9 +98,9 @@ function get_post_value($field_name, &$form_valid, &$fields_valid, $required = t
 		$value = $_POST[$field_name];
 		if (!is_array($value)) {
 			if (strlen(trim($value)) > 0) {
-				$value = array($value);
+				$value = [$value];
 			} else {
-				$value = array();
+				$value = [];
 			}
 		}
 
@@ -258,7 +258,7 @@ $page = get_post_value('page', $nop, $nop, false);
 $form_valid = true;
 
 //holds fields validity status
-$fields_valid = array();
+$fields_valid = [];
 
 //processing of submitted forms
 switch ($page) {
@@ -305,7 +305,7 @@ switch ($page) {
 //we are rendering User form
 if ($render === 'user') {
 	$user_organizations = kyUserOrganization::getAll()->filterByType(kyUserOrganization::TYPE_SHARED);
-	$salutations = array('Mr.', 'Ms.', 'Mrs.', 'Dr.');
+	$salutations = ['Mr.', 'Ms.', 'Mrs.', 'Dr.'];
 
 	$timezones = get_timezones(); ?>
 	<form method="POST">
