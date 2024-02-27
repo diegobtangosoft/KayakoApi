@@ -451,7 +451,7 @@ abstract class kyObjectBase
 					$setter = $parameters['setter'];
 				}
 
-				if (strlen($getter) === 0 && strlen($setter) === 0) {
+				if (isset($getter) && isset($setter) && strlen($getter) === 0 && strlen($setter) === 0) {
 					$name_parts = explode('_', $property->getName());
 					foreach ($name_parts as $name_part) {
 						$accessor .= ucfirst($name_part);
@@ -468,7 +468,7 @@ abstract class kyObjectBase
 					$getter = null;
 				}
 
-				if (strlen($getter) === 0 && strlen($setter) === 0) {
+				if (isset($getter) && isset($setter) && strlen($getter) === 0 && strlen($setter) === 0) {
 					continue;
 				}
 

@@ -109,8 +109,8 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
 	/**
 	 * Iterator implementation.
 	 */
-	public function current()
-	{
+	public function current(): mixed
+  {
 		return current($this->objects);
 	}
 
