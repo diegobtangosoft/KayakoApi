@@ -118,7 +118,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
   /**
    * Iterator implementation.
    */
-  public function key(): string|int|null
+  public function key(): mixed
   {
     return key($this->objects);
   }
@@ -126,7 +126,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
   /**
    * Iterator implementation.
    */
-  public function next(): mixed
+  public function next(): void
   {
     next($this->objects);
   }
@@ -134,7 +134,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
   /**
    * Iterator implementation.
    */
-  public function valid(): mixed
+  public function valid(): bool
   {
     return current($this->objects) !== false;
   }
