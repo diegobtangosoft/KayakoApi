@@ -429,7 +429,7 @@ abstract class kyObjectBase
 					$api_field = $parameters['name'];
 				}
 
-				if (strlen($api_field) === 0) {
+				if (isset($api_field) && strlen($api_field) === 0) {
 					$api_field = str_replace('_', '', $property->getName());
 				}
 
@@ -459,7 +459,7 @@ abstract class kyObjectBase
 					$getter = sprintf('get%s', $accessor);
 					$setter = sprintf('set%s', $accessor);
 				}
-
+        $setter = ($setter ?? '');
 				if (!method_exists($classname, $setter)) {
 					$setter = null;
 				}

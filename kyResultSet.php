@@ -183,7 +183,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
   /**
    * ArrayAccess implementation.
    */
-  public function offsetUnset($offset): void
+  public function offsetUnset(mixed $offset): void
   {
     if (!in_array($offset, $this->object_keys)) {
       return;
