@@ -460,6 +460,7 @@ abstract class kyObjectBase
 					$setter = sprintf('set%s', $accessor);
 				}
         $setter = ($setter ?? '');
+        $getter = ($getter ?? '');
 				if (!method_exists($classname, $setter)) {
 					$setter = null;
 				}
@@ -468,14 +469,15 @@ abstract class kyObjectBase
 					$getter = null;
 				}
 
-				if (isset($getter) && isset($setter) && strlen($getter) === 0 && strlen($setter) === 0) {
+//				if (strlen($getter) === 0 && strlen($setter) === 0) {
+				if ((!isset($getter) && !isset($setter)) || (strlen($getter) === 0 && strlen($setter) === 0)){
 					continue;
 				}
 
 				$required_create = (array_key_exists('required', $parameters) && $parameters['required'] === 'true') || (array_key_exists('required_create', $parameters) && $parameters['required_create'] === 'true');
 				$required_update = (array_key_exists('required', $parameters) && $parameters['required'] === 'true') || (array_key_exists('required_update', $parameters) && $parameters['required_update'] === 'true');
 
-				$aliases = array();
+				$aliases = [];
 				if (array_key_exists('alias', $parameters)) {
 					if (!is_array($parameters['alias'])) {
 						$aliases = array($parameters['alias']);
