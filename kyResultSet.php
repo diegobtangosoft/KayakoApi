@@ -158,7 +158,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
   /**
    * ArrayAccess implementation.
    */
-  public function offsetGet($offset)
+  public function offsetGet($offset): mixed
   {
     if (!in_array($offset, $this->object_keys)) {
       return null;
@@ -170,7 +170,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
   /**
    * ArrayAccess implementation.
    */
-  public function offsetSet($offset, $value)
+  public function offsetSet(mixed $offset, mixed $value): void
   {
     if (!is_object($value) || (strlen(($this->class_name ?? '')) > 0 && get_class($value) !== $this->class_name)) {
       throw new DomainException(sprintf('The result set can only hold objects of type "%s"', $this->class_name));
@@ -183,7 +183,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
   /**
    * ArrayAccess implementation.
    */
-  public function offsetUnset($offset)
+  public function offsetUnset($offset): void
   {
     if (!in_array($offset, $this->object_keys)) {
       return;
