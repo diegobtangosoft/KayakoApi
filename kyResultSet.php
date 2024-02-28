@@ -102,7 +102,7 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
   /**
    * Iterator implementation.
    */
-  public function rewind(): mixed
+  public function rewind(): void
   {
     reset($this->objects);
   }
