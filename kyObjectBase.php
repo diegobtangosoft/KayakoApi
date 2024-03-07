@@ -134,7 +134,7 @@ abstract class kyObjectBase
    * @param bool $create Indicates if the result will be used to create (true) or update (false) an object.
    * @return array
    */
-  public function buildData($create): array
+  public function buildData($create)
   {
     $this->checkRequiredAPIFields($create);
     return array();
@@ -147,7 +147,7 @@ abstract class kyObjectBase
    * @param string $field_name Field name.
    * @param mixed $field_value Field value.
    */
-  protected function buildDataNumeric(&$data, $field_name, $field_value): void
+  protected function buildDataNumeric(&$data, $field_name, $field_value)
   {
     if (is_numeric($field_value)) {
       $data[$field_name] = $field_value;
@@ -161,7 +161,7 @@ abstract class kyObjectBase
    * @param string $field_name Field name.
    * @param mixed $field_value Field value.
    */
-  protected function buildDataString(&$data, $field_name, $field_value): void
+  protected function buildDataString(&$data, $field_name, $field_value)
   {
     if (strlen($field_value) > 0) {
       $data[$field_name] = $field_value;
@@ -175,7 +175,7 @@ abstract class kyObjectBase
    * @param string $field_name Field name.
    * @param mixed $field_value Field value.
    */
-  protected function buildDataBool(&$data, $field_name, $field_value): void
+  protected function buildDataBool(&$data, $field_name, $field_value)
   {
     if ($field_value !== null) {
       $data[$field_name] = $field_value ? 1 : 0;
@@ -189,7 +189,7 @@ abstract class kyObjectBase
    * @param string $field_name Field name.
    * @param mixed $field_value Field value.
    */
-  protected function buildDataList(&$data, $field_name, $field_value): void
+  protected function buildDataList(&$data, $field_name, $field_value)
   {
     if (is_array($field_value) && count($field_value) > 0) {
       $data[$field_name] = implode(',', $field_value);
@@ -201,7 +201,7 @@ abstract class kyObjectBase
    *
    * @return bool
    */
-  public function isNew(): bool
+  public function isNew()
   {
     return $this->getId() === null;
   }
@@ -211,7 +211,7 @@ abstract class kyObjectBase
    *
    * @return bool
    */
-  public function isReadOnly(): bool
+  public function isReadOnly()
   {
     return $this->read_only;
   }
@@ -222,7 +222,7 @@ abstract class kyObjectBase
    * @param bool $read_only Read only flag.
    * @return bool
    */
-  public function setReadOnly($read_only): void
+  public function setReadOnly($read_only)
   {
     $this->read_only = $read_only;
   }
@@ -247,7 +247,7 @@ abstract class kyObjectBase
    *
    * @return kyRESTClientInterface
    */
-  protected static function getRESTClient(): kyRESTClient|kyRESTClientInterface
+  protected static function getRESTClient()
   {
     return kyConfig::get()->getRESTClient();
   }
@@ -258,7 +258,7 @@ abstract class kyObjectBase
    * @param array $search_parameters Optional. Additional search parameters.
    * @return kyResultSet
    */
-  public static function getAll(): kyResultSet
+  public static function getAll()
   {
     if (func_num_args() == 0) {
       $search_parameters = array();
@@ -281,7 +281,7 @@ abstract class kyObjectBase
    * @param int|array $id Object identifier or list of identifiers (ex. ticket identifier and ticket post identifier when fetching TicketPost).
    * @return kyObjectBase
    */
-  public static function get(): kyObjectBase|null
+  public static function get()
   {
     list($id) = func_get_args();
 
@@ -301,7 +301,7 @@ abstract class kyObjectBase
    * @return kyObjectBase
    * @throws BadMethodCallException
    */
-  public function refresh(): kyObjectBase
+  public function refresh()
   {
     if ($this->isNew()) {
       throw new BadMethodCallException("Object is not yet saved on server. Save it before refreshing.");
@@ -327,7 +327,7 @@ abstract class kyObjectBase
    * @throws kyException
    * @throws BadMethodCallException
    */
-  public function create(): kyObjectBase
+  public function create()
   {
     if ($this->read_only) {
       throw new BadMethodCallException(sprintf("You can't create new objects of type %s.", get_called_class()));
@@ -350,7 +350,7 @@ abstract class kyObjectBase
    * @throws kyException
    * @throws BadMethodCallException
    */
-  public function update(): kyObjectBase
+  public function update()
   {
     if ($this->read_only) {
       throw new BadMethodCallException(sprintf("You can't update objects of type %s.", get_called_class()));
@@ -375,7 +375,7 @@ abstract class kyObjectBase
    *
    * @return kyObjectBase
    */
-  public function save(): kyObjectBase
+  public function save()
   {
     if ($this->isNew()) {
       return $this->create();
@@ -387,7 +387,7 @@ abstract class kyObjectBase
   /**
    * Deletes the object on the server.
    */
-  public function delete(): void
+  public function delete()
   {
     if ($this->read_only) {
       throw new BadMethodCallException(sprintf("You can't delete object of type %s.", get_called_class()));
@@ -404,7 +404,7 @@ abstract class kyObjectBase
    * and builds API field list with property name, description, setter and getter method names, and required flags.
    * @see kyObjectBase::$_api_fields
    */
-  private static function initAPIFieldsAccessors(): void
+  private static function initAPIFieldsAccessors()
   {
     $classname = get_called_class();
 
@@ -513,7 +513,7 @@ abstract class kyObjectBase
    *
    * @return string[]
    */
-  public static function getAPIFields(): array
+  public static function getAPIFields()
   {
     static::initAPIFieldsAccessors();
     $classname = get_called_class();
@@ -547,7 +547,7 @@ abstract class kyObjectBase
    * @param bool $create True when object will be created. False when object will be updated.
    * @return string[]
    */
-  public static function getRequiredAPIFields($create): array
+  public static function getRequiredAPIFields($create)
   {
     static::initAPIFieldsAccessors();
     $classname = get_called_class();
@@ -572,7 +572,7 @@ abstract class kyObjectBase
    * @return string[]|bool List of missing API fields or true when there are none.
    * @throws kyException When there are missing field values and $throw_exception is true.
    */
-  public function checkRequiredAPIFields($create, $throw_exception = true): array|bool
+  public function checkRequiredAPIFields($create, $throw_exception = true)
   {
     $classname = get_class($this);
     /** @noinspection PhpUndefinedMethodInspection */
@@ -611,7 +611,7 @@ abstract class kyObjectBase
    * @param string $api_field_name API field name.
    * @return mixed
    */
-  public function __get($api_field_name): mixed
+  public function __get($api_field_name)
   {
     static::initAPIFieldsAccessors();
     $classname = get_class($this);
@@ -643,7 +643,7 @@ abstract class kyObjectBase
    * @param mixed $value API field value.
    * @return mixed
    */
-  public function __set($api_field_name, $value): mixed
+  public function __set($api_field_name, $value)
   {
     static::initAPIFieldsAccessors();
     $classname = get_class($this);
@@ -672,7 +672,7 @@ abstract class kyObjectBase
    * @param bool $filter_names_only True (default) to return array('filterByXXX', 'filterByYYY', ...). False to return array('filterByXXX' => 'getXXX', 'filterByYYY' => 'YYY', ...).
    * @return array
    */
-  public static function getAvailableFilterMethods($filter_names_only = true): array
+  public static function getAvailableFilterMethods($filter_names_only = true)
   {
     $class_name = get_called_class();
     if (!array_key_exists($class_name, self::$_filter_methods)) {
@@ -710,7 +710,7 @@ abstract class kyObjectBase
    * @param bool $order_names_only True (default) to return array('orderByXXX', 'orderByYYY', ...). False to return array('orderByXXX' => 'getXXX', 'orderByYYY' => 'YYY', ...).
    * @return array
    */
-  public static function getAvailableOrderMethods($order_names_only = true): array
+  public static function getAvailableOrderMethods($order_names_only = true)
   {
     $class_name = get_called_class();
     if (!array_key_exists($class_name, self::$_order_methods)) {
@@ -747,7 +747,7 @@ abstract class kyObjectBase
    *
    * @return string
    */
-  public function __toString(): string
+  public function __toString()
   {
     return sprintf("%s (id: %s): %s\n", get_class($this), implode(', ', $this->getId(true)), $this->toString());
   }
