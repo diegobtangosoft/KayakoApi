@@ -126,10 +126,18 @@ class kyResultSet implements Iterator, Countable, ArrayAccess
   /**
    * Iterator implementation.
    */
-  public function next(): mixed
+  public function next(): void
   {
-    return next($this->objects);
+    next($this->objects);
   }
+
+  /**
+   * Iterator implementation.
+   */
+//  public function next(): mixed
+//  {
+//    return next($this->objects);
+//  }
 
   /**
    * Iterator implementation.
