@@ -232,6 +232,7 @@ class kyTicket extends kyObjectWithCustomFieldsBase
 	 * @var string
 	 */
 	protected $email;
+	protected $bccemail;
 
 	/**
 	 * Full name of the last replier to this ticket.
@@ -520,6 +521,7 @@ class kyTicket extends kyObjectWithCustomFieldsBase
 		$this->owner_staff_name = $data['ownerstaffname'];
 		$this->full_name = $data['fullname'];
 		$this->email = $data['email'];
+		$this->bccemail = $data['bccemail'];
 		$this->last_replier = $data['lastreplier'];
 		$this->subject = $data['subject'];
 		$this->creation_time = ky_assure_positive_int($data['creationtime']);
@@ -606,6 +608,9 @@ class kyTicket extends kyObjectWithCustomFieldsBase
 		$data['subject'] = $this->subject;
 		$data['fullname'] = $this->full_name;
 		$data['email'] = $this->email;
+    if (!empty($this->bccemails)) {
+      $data['bccemails'] = $this->bccemails;
+    }
 		$data['departmentid'] = $this->department_id;
 		$data['ticketstatusid'] = $this->status_id;
 		$data['ticketpriorityid'] = $this->priority_id;
@@ -1399,6 +1404,29 @@ class kyTicket extends kyObjectWithCustomFieldsBase
 	public function setEmail($email)
 	{
 		$this->email = ky_assure_string($email);
+		return $this;
+	}
+	/**
+	 * Return the BCC e-mail address(es) for the ticke
+	 *
+	 * @return string
+	 * @filterBy
+	 * @orderBy
+	 */
+	public function getBccEmails()
+	{
+		return $this->bccemails;
+	}
+
+	/**
+	 * Sets the BCC e-mail address(es) (comma separated if more than one)
+	 *
+	 * @param string $bccemails Creator e-mail.
+	 * @return kyTicket
+	 */
+	public function setBccEmails($bccemails)
+	{
+		$this->bccemails = ky_assure_string($bccemails);
 		return $this;
 	}
 
