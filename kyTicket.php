@@ -521,7 +521,7 @@ class kyTicket extends kyObjectWithCustomFieldsBase
 		$this->owner_staff_name = $data['ownerstaffname'];
 		$this->full_name = $data['fullname'];
 		$this->email = $data['email'];
-		$this->bccemails = $data['bccemails'];
+		$this->bccemails = $data['bccemails'] ?? '';
 		$this->last_replier = $data['lastreplier'];
 		$this->subject = $data['subject'];
 		$this->creation_time = ky_assure_positive_int($data['creationtime']);
